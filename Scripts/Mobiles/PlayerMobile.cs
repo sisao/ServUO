@@ -1182,7 +1182,13 @@ namespace Server.Mobiles
 			if (from is PlayerMobile)
 			{
 				((PlayerMobile)from).ClaimAutoStabledPets();
+                ((PlayerMobile)from).ValidateEquipment();
 			}
+
+            else if (Siege.SiegeShard && from.Map == Map.Trammel && from.AccessLevel == AccessLevel.Player)
+            {
+                from.Map = Map.Felucca;
+            }
 
             if (((from.Map == Map.Trammel && from.Region.IsPartOf("Blackthorn Castle")) || from.Region.IsPartOf("Ver Lor Reg")) && from.Player && from.AccessLevel == AccessLevel.Player && from.CharacterOut)
             {
@@ -1910,7 +1916,7 @@ namespace Server.Mobiles
 
 			m_NextMovementTime += speed;
 
-            if (Core.TickCount - NextPassiveDetectHidden >= 0)
+            if (!Siege.SiegeShard && Core.TickCount - NextPassiveDetectHidden >= 0)
             {
                 DetectHidden.DoPassiveDetect(this);
                 NextPassiveDetectHidden = Core.TickCount + (int)TimeSpan.FromSeconds(2).TotalMilliseconds;
@@ -2157,9 +2163,9 @@ namespace Server.Mobiles
                     list.Add(new OpenBackpackEntry(this));
                 }
 
-				if (Alive && InsuranceEnabled)
-				{
-					list.Add(new CallbackEntry(6201, ToggleItemInsurance));
+                if (Alive && InsuranceEnabled)
+                {
+                    list.Add(new CallbackEntry(6201, ToggleItemInsurance));
 
                     if (Core.SA)
                         list.Add(new CallbackEntry(1114299, new ContextCallback(OpenItemInsuranceMenu)));
@@ -2174,7 +2180,11 @@ namespace Server.Mobiles
                             list.Add(new CallbackEntry(6200, AutoRenewInventoryInsurance));
                         }
                     }
-				}
+                }
+                else
+                {
+                    list.Add(new CallbackEntry(3006168, SiegeBlessItem));
+                }
 
                 if (Core.HS)
                     list.Add(new CallbackEntry(RefuseTrades ? 1154112 : 1154113, new ContextCallback(ToggleTrades))); // Allow Trades / Refuse Trades
@@ -2428,7 +2438,44 @@ namespace Server.Mobiles
 			}
 		}
 
-		private class CancelRenewInventoryInsuranceGump : Gump
+        #region Siege Bless Item
+        private Item _BlessedItem;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Item BlessedItem { get { return _BlessedItem; } set { _BlessedItem = value; } }
+
+        private void SiegeBlessItem()
+        {
+            if (_BlessedItem != null && _BlessedItem.Deleted)
+                _BlessedItem = null;
+
+            BeginTarget(2, false, TargetFlags.None, (from, targeted) =>
+                {
+                    Siege.TryBlessItem(this, targeted);
+                });
+        }
+
+        public override bool Drop(Point3D loc)
+        {
+            if (!Siege.SiegeShard || _BlessedItem == null)
+                return base.Drop(loc);
+
+            Item item = Holding;
+            bool drop = base.Drop(loc);
+
+            if (item != null && drop && item.Parent == null && _BlessedItem != null && _BlessedItem == item)
+            {
+                _BlessedItem = null;
+                item.LootType = LootType.Regular;
+
+                SendLocalizedMessage(1075292, item.Name != null ? item.Name : "#" + item.LabelNumber.ToString()); // ~1_NAME~ has been unblessed.
+            }
+
+            return drop;
+        }
+        #endregion
+
+        private class CancelRenewInventoryInsuranceGump : Gump
 		{
 			private readonly PlayerMobile m_Player;
             private readonly ItemInsuranceMenuGump m_InsuranceGump;
@@ -3270,7 +3317,7 @@ namespace Server.Mobiles
                             listHealers.Add((BaseHealer)vendor);
                     }
 
-                    if (Corpse != null)
+                    if (Corpse != null && Corpse.Map != null)
                     {
                         NetState.Send(new DisplayWaypoint(Corpse.Serial, Corpse.X, Corpse.Y, Corpse.Z, Corpse.Map.MapID, WaypointType.Corpse, Name));
                     }
@@ -4170,6 +4217,9 @@ namespace Server.Mobiles
 
 			switch (version)
 			{
+                case 35: // Siege Blessed Item
+                    _BlessedItem = reader.ReadItem();
+                    goto case 34;
                     // Version 34 - new BOD System
                 case 34:
                 case 33:
@@ -4593,7 +4643,9 @@ namespace Server.Mobiles
 
 			base.Serialize(writer);
 
-			writer.Write(34); // version
+			writer.Write(35); // version
+
+            writer.Write(_BlessedItem);
 
             writer.Write((int)m_ExploringTheDeepQuest);
 
