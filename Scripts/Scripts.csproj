@@ -282,6 +282,8 @@
     <Compile Include="Context Menus\TeachEntry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Custom\Ingots.cs" />
+    <Compile Include="Custom\Ores.cs" />
     <Compile Include="Deprecated\AlchemyStone.cs" />
     <Compile Include="Deprecated\FiveOvercapStatScroll.cs" />
     <Compile Include="Deprecated\GamblingStone.cs" />
@@ -2583,6 +2585,7 @@
     <Compile Include="Mobiles\Void Creatures\Relanord.cs" />
     <Compile Include="Mobiles\Void Creatures\UsagralemBallem.cs" />
     <Compile Include="Mobiles\Void Creatures\Vasanord.cs" />
+    <Compile Include="Multis\HouseTeleporterTile.cs" />
     <Compile Include="Quests\ALittleSomething.cs" />
     <Compile Include="Quests\AmbitiousSolenQueen\AmbitiousQueenQuest.cs" />
     <Compile Include="Quests\AmbitiousSolenQueen\Conversations.cs" />
@@ -9980,6 +9983,7 @@
     <Compile Include="Services\Revamped Dungeons\TheExodusEncounter\Resources\GoldDust.cs" />
     <Compile Include="Services\Revamped Dungeons\TheExodusEncounter\Resources\NexusCore.cs" />
     <Compile Include="Services\Revamped Dungeons\TheExodusEncounter\Resources\SmallPieceofBlackrock.cs" />
+    <Compile Include="Services\Revamped Dungeons\WrongDungeon\EnchantedHotItem.cs" />
     <Compile Include="Services\Revamped Dungeons\WrongDungeon\Items\Soap.cs" />
     <Compile Include="Services\Revamped Dungeons\WrongDungeon\Items\Artifacts\TortureRackArtifact.cs" />
     <Compile Include="Services\Revamped Dungeons\WrongDungeon\Items\BedrollSpawner.cs" />

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 namespace Server.Items
 {
@@ -340,6 +340,296 @@ namespace Server.Items
             base.Deserialize(reader);
 
             int version = reader.ReadInt();
+        }
+    }
+
+    public class OldCopperGranite : BaseGranite
+    {
+        [Constructable]
+        public OldCopperGranite() : base(CraftResource.OldCopper)
+        {
+        }
+
+        public OldCopperGranite(Serial serial) : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(1); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            if (version == 0)
+                Name = "old copper granite";
+        }
+    }
+
+    public class SilverGranite : BaseGranite
+    {
+        [Constructable]
+        public SilverGranite() : base(CraftResource.Silver)
+        {
+        }
+
+       
+
+        public SilverGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(1); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            if (version == 0)
+                Name = "silver granite";
+        }
+    }
+
+    public class RoseGranite : BaseGranite
+    {
+        [Constructable]
+        public RoseGranite() : base(CraftResource.Rose)
+        {
+        }       
+
+        public RoseGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(1); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            if (version == 0)
+                Name = "rose granite";
+        }
+    }
+
+ 
+
+    public class BloodRockGranite : BaseGranite
+    {
+        [Constructable]
+        public BloodRockGranite()
+            : base(CraftResource.BloodRock)
+        {
+        }
+
+      
+
+        public BloodRockGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(1); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            if (version == 0)
+                Name = "blood rock granite";
+        }
+    }
+
+    public class AquaGranite : BaseGranite
+    {
+        [Constructable]
+        public AquaGranite()
+            : base(CraftResource.Aqua)
+        {
+        }
+
+       
+
+        public AquaGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(1); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            if (version == 0)
+                Name = "aqua granite";
+        }
+    }
+
+    public class MytherilGranite : BaseGranite
+    {
+        [Constructable]
+        public MytherilGranite()
+            : base(CraftResource.Mytheril)
+        {
+        }
+
+        
+
+        public MytherilGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(1); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            if (version == 0)
+                Name = "mytheril granite";
+        }
+    }
+
+    public class AmethystGranite : BaseGranite
+    {
+        [Constructable]
+        public AmethystGranite()
+            : base(CraftResource.Amethyst)
+        {
+        }
+
+      
+        public AmethystGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(1); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            if (version == 0)
+                Name = "amethyst granite";
+        }
+    }
+
+    public class DwarvenGranite : BaseGranite
+    {
+        [Constructable]
+        public DwarvenGranite()
+            : base(CraftResource.Dwarven)
+        {
+        }
+
+       
+
+        public DwarvenGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(1); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            if (version == 0)
+                Name = "dwarven granite";
+        }
+    }
+
+    public class IceGranite : BaseGranite
+    {
+        [Constructable]
+        public IceGranite()
+            : base(CraftResource.Ice)
+        {
+        }
+
+       
+
+        public IceGranite(Serial serial)
+            : base(serial)
+        {
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write(1); // version
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            if (version == 0)
+                Name = "ice granite";
         }
     }
 }
