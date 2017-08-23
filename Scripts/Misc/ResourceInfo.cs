@@ -408,8 +408,9 @@ namespace Server.Items {
                 set {
                     this.m_ShieldEnergyResist = value;
                 }
-            }#
-            endregion
+            }
+            
+            #endregion
 
             public CraftAttributeInfo() {}
 
@@ -669,8 +670,7 @@ namespace Server.Items {
 
                     //public static readonly CraftAttributeInfo OakWood, AshWood, YewWood, Heartwood, Bloodwood, Frostwood;
 
-                    #
-                    region Mondain 's Legacy
+                    #region Mondain 's Legacy
             CraftAttributeInfo oak = OakWood = new CraftAttributeInfo ();
 
             oak.ArmorPhysicalResist = 3;
