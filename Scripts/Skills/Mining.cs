@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server.Items;
 using Server.Mobiles;
 using Server.Targeting;
@@ -91,14 +91,33 @@ namespace Server.Engines.Harvest
             res = new HarvestResource[]
             {
                 new HarvestResource(00.0, 00.0, 100.0, 1007072, typeof(IronOre), typeof(Granite)),
-                new HarvestResource(65.0, 25.0, 105.0, 1007073, typeof(DullCopperOre),	typeof(DullCopperGranite), typeof(DullCopperElemental)),
-                new HarvestResource(70.0, 30.0, 110.0, 1007074, typeof(ShadowIronOre),	typeof(ShadowIronGranite), typeof(ShadowIronElemental)),
+                new HarvestResource(65.0, 25.0, 105.0, 1007073, typeof(DullCopperOre),  typeof(DullCopperGranite), typeof(DullCopperElemental)),
+                new HarvestResource(70.0, 30.0, 110.0, 1007074, typeof(ShadowIronOre),  typeof(ShadowIronGranite), typeof(ShadowIronElemental)),
                 new HarvestResource(75.0, 35.0, 115.0, 1007075, typeof(CopperOre), typeof(CopperGranite), typeof(CopperElemental)),
                 new HarvestResource(80.0, 40.0, 120.0, 1007076, typeof(BronzeOre), typeof(BronzeGranite), typeof(BronzeElemental)),
                 new HarvestResource(85.0, 45.0, 125.0, 1007077, typeof(GoldOre), typeof(GoldGranite), typeof(GoldenElemental)),
                 new HarvestResource(90.0, 50.0, 130.0, 1007078, typeof(AgapiteOre), typeof(AgapiteGranite), typeof(AgapiteElemental)),
                 new HarvestResource(95.0, 55.0, 135.0, 1007079, typeof(VeriteOre), typeof(VeriteGranite), typeof(VeriteElemental)),
-                new HarvestResource(99.0, 59.0, 139.0, 1007080, typeof(ValoriteOre), typeof(ValoriteGranite), typeof(ValoriteElemental))
+                new HarvestResource(99.0, 59.0, 139.0, 1007080, typeof(ValoriteOre), typeof(ValoriteGranite), typeof(ValoriteElemental)),
+
+                    new HarvestResource( 35.0, 35.0, 100.0, "You dig some Old Copper ore and put it in your backpack" , typeof( OldCopperOre ), typeof( OldCopperGranite ) ),
+                    new HarvestResource( 55, 55.0, 100.0, "You dig some Silver ore and put it in your backpack", typeof( SilverOre ),   typeof( SilverGranite )),
+                    new HarvestResource( 65, 65.0, 100.0, "You dig some Rose ore and put it in your backpack", typeof( RoseOre ),   typeof( RoseGranite ) ),
+                    new HarvestResource( 72.5, 72.5, 100.0, "You dig some Ice ore and put it in your backpack", typeof( IceOre ),   typeof( IceGranite ) ),
+                    new HarvestResource( 72.5, 72.5, 100.0, "You dig some Amethyst ore and put it in your backpack", typeof( AmethystOre ), typeof( AmethystGranite ) ),
+                    new HarvestResource( 75.0, 75.0, 100.0, "You dig some Blood Rock ore and put it in your backpack" , typeof( BloodRockOre ), typeof( BloodRockGranite ) ),
+                    new HarvestResource( 80.0, 80.0, 100.0, "You dig some Aqua ore and put it in your backpack" , typeof( AquaOre ), typeof( AquaGranite ) ),
+                    new HarvestResource( 82.0, 82.0, 100.0, "You dig some Fire ore and put it in your backpack", typeof( FireOre ), typeof(Granite) ),  //Fire
+                    new HarvestResource( 87.5, 87.5, 100.0, "You dig some Mytheril ore and put it in your backpack" , typeof( MytherilOre ), typeof( MytherilGranite ) ),
+                    new HarvestResource( 90.0, 90.0, 100.0, "You dig some Dwarven ore and put it in your backpack" , typeof( DwarvenOre ), typeof( DwarvenGranite ) ),
+                    new HarvestResource( 92.5, 92.5, 100.0, "You dig some Black Diamond ore and put it in your backpack" , typeof( BlackDiamondOre ), typeof( Granite ) ),
+                    new HarvestResource( 95, 95.0, 100.0, "You dig some Black Rock ore and put it in your backpack", typeof( BlackRockOre ),    typeof( Granite ) ),
+                    new HarvestResource( 97.0, 97.0, 100.0, "You dig some Oceanic ore and put it in your backpack" , typeof( OceanicOre ), typeof( Granite ) ),
+                    new HarvestResource( 99.0, 99.0, 100.0, "You dig some Daemon Steel ore and put it in your backpack" , typeof( DaemonSteelOre ), typeof( Granite ) ),
+                    new HarvestResource( 99.5, 99.5, 100.0, "You dig some Reactive ore and put it in your backpack", typeof( ReactiveOre ),     typeof( Granite ) ),
+                    new HarvestResource( 100.0, 100.0, 100.0, "You dig some Adamantium ore and put it in your backpack", typeof( AdamantiumOre ),       typeof( Granite ) ),
+                    new HarvestResource( 100.0, 100.0, 100.0, "You dig some Sapphire ore and put it in your backpack", typeof( SapphireOre ),       typeof( Granite ) )
+
             };
 
             veins = new HarvestVein[]
@@ -111,7 +130,34 @@ namespace Server.Engines.Harvest
                 new HarvestVein(05.6, 0.5, res[5], res[0]), // Gold
                 new HarvestVein(04.2, 0.5, res[6], res[0]), // Agapite
                 new HarvestVein(02.8, 0.5, res[7], res[0]), // Verite
-                new HarvestVein(01.4, 0.5, res[8], res[0])// Valorite
+                new HarvestVein(01.4, 0.5, res[8], res[0]),// Valorite
+                
+                 new HarvestVein( 07.5, 0.0, res[8+1], res[0]   ), // OldCopper
+                 new HarvestVein( 07.5, 0.0, res[8+2], res[0]   ), // Shadow
+                    new HarvestVein( 06.6, 0.0, res[8+3], res[0]   ), // Silver
+                    new HarvestVein( 06.6, 0.0, res[8+4], res[0]   ), // Verite
+                    new HarvestVein( 05.7, 0.0, res[8+5], res[0] ), // Rose
+                    new HarvestVein( 05.7, 0.0, res[8+6], res[0] ), // Gold
+                    //63.8
+
+                    new HarvestVein( 05.1, 0.0, res[8+7], res[0]   ), // Ice
+                    new HarvestVein( 04.5, 0.0, res[8+8], res[0]  ), // Amethyst
+                    new HarvestVein( 04.3, 0.0, res[8+9], res[0]   ), // Valorite
+                    new HarvestVein( 03.9, 0.0, res[8+10], res[0]   ), // Blood rock
+                    new HarvestVein( 03.1, 0.0, res[8+11], res[0]   ), // Aqua
+                    new HarvestVein( 03.1, 0.0, res[8+12], res[0]   ), // Fire
+                    new HarvestVein( 02.6, 0.0, res[8+13], res[0]   ), // Mytheril
+                    //26.6
+
+                    new HarvestVein( 02.6, 0.0, res[8+14], res[0]   ), // Dwarven
+                    new HarvestVein( 02.1, 0.0, res[8+15], res[0]   ), // Black diamond
+                    new HarvestVein( 01.6, 0.0, res[8+16], res[0]   ), // Black Rock
+                    new HarvestVein( 01.2, 0.0, res[8+17], res[0]   ), // Oceanic
+                    new HarvestVein( 00.9, 0.0, res[8+18], res[0]   ), // Daemon steel
+                    new HarvestVein( 00.8, 0.0, res[8+19], res[0]   ), // Reactive 
+                    new HarvestVein( 00.4, 0.0, res[20], res[0]   ), // Adamantium
+                    new HarvestVein( 00.4, 0.0, res[8+20], res[0]   ) // Sapphire 
+                    //9.6
             };
 
             oreAndStone.Resources = res;
@@ -130,7 +176,7 @@ namespace Server.Engines.Harvest
                     new BonusHarvestResource(100, .1, 1072568, typeof(Turquoise)),
                     new BonusHarvestResource(100, .1, 1077180, typeof(SmallPieceofBlackrock)),
                     new BonusHarvestResource(100, .1, 1113344, typeof(CrystallineBlackrock), Map.TerMur)
-				};
+                };
             }
 
             oreAndStone.RaceBonus = Core.ML;

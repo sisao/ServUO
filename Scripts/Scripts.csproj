@@ -282,6 +282,8 @@
     <Compile Include="Context Menus\TeachEntry.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Custom\Ingots.cs" />
+    <Compile Include="Custom\Ores.cs" />
     <Compile Include="Deprecated\AlchemyStone.cs" />
     <Compile Include="Deprecated\FiveOvercapStatScroll.cs" />
     <Compile Include="Deprecated\GamblingStone.cs" />
