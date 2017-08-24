@@ -5,9 +5,10 @@ using System.Text;
 
 namespace Server.Items
 {
-    [TypeAlias("Server.Custom.Items.AquaOre")]
     public class AquaOre : BaseOre
     {
+        protected override CraftResource DefaultResource { get { return CraftResource.Aqua; } }
+
         [Constructable]
         public AquaOre() : this(1)
         {
@@ -16,7 +17,7 @@ namespace Server.Items
         [Constructable]
         public AquaOre(int amount) : base(CraftResource.Aqua, amount)
         {
-            Name = "Aqua Ore";
+            
         }
 
         public AquaOre(Serial serial) : base(serial)
@@ -43,9 +44,11 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.RoseOre")]
     public class RoseOre : BaseOre
     {
+
+        protected override CraftResource DefaultResource { get { return CraftResource.Rose; } }
+
         [Constructable]
         public RoseOre() : this(1)
         {
@@ -54,7 +57,7 @@ namespace Server.Items
         [Constructable]
         public RoseOre(int amount) : base(CraftResource.Rose, amount)
         {
-            Name = "Rose Ore";
+            
         }
 
         public RoseOre(Serial serial) : base(serial)
@@ -81,7 +84,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.OceanicOre")]
     public class OceanicOre : BaseOre
     {
         [Constructable]
@@ -92,7 +94,7 @@ namespace Server.Items
         [Constructable]
         public OceanicOre(int amount) : base(CraftResource.Oceanic, amount)
         {
-            Name = "Oceanic Ore";
+           
         }
 
         public OceanicOre(Serial serial) : base(serial)
@@ -119,7 +121,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.OldCopperOre")]
     public class OldCopperOre : BaseOre
     {
         [Constructable]
@@ -130,7 +131,7 @@ namespace Server.Items
         [Constructable]
         public OldCopperOre(int amount) : base(CraftResource.OldCopper, amount)
         {
-            Name = "Old Copper Ore";
+            
         }
 
         public OldCopperOre(Serial serial) : base(serial)
@@ -157,7 +158,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.MytherilOre")]
     public class MytherilOre : BaseOre
     {
         [Constructable]
@@ -195,7 +195,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.BlackDiamondOre")]
     public class BlackDiamondOre : BaseOre
     {
         [Constructable]
@@ -233,7 +232,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.AdamantiumOre")]
     public class AdamantiumOre : BaseOre
     {
         [Constructable]
@@ -271,7 +269,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.SilverOre")]
     public class SilverOre : BaseOre
     {
         [Constructable]
@@ -309,7 +306,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.IceOre")]
     public class IceOre : BaseOre
     {
         [Constructable]
@@ -347,7 +343,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.AmethystOre")]
     public class AmethystOre : BaseOre
     {
         [Constructable]
@@ -388,7 +383,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.HavocOre")]
     public class HavocOre : BaseOre
     {
         [Constructable]
@@ -429,7 +423,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.BloodRockOre")]
     public class BloodRockOre : BaseOre
     {
         [Constructable]
@@ -467,7 +460,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.DwarvenOre")]
     public class DwarvenOre : BaseOre
     {
         [Constructable]
@@ -508,7 +500,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.SandRockOre")]
     public class SandRockOre : BaseOre
     {
         [Constructable]
@@ -546,7 +537,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.BlackRockOre")]
     public class BlackRockOre : BaseOre
     {
         [Constructable]
@@ -584,7 +574,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.DaemonSteelOre")]
     public class DaemonSteelOre : BaseOre
     {
         [Constructable]
@@ -621,7 +610,7 @@ namespace Server.Items
             return new DaemonSteelIngot();
         }
     }
-    [TypeAlias("Server.Custom.Items.FireOre")]
+    
     public class FireOre : BaseOre
     {
         [Constructable]
@@ -662,7 +651,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.ReactiveOre")]
     public class ReactiveOre : BaseOre
     {
         [Constructable]
@@ -703,7 +691,6 @@ namespace Server.Items
         }
     }
 
-    [TypeAlias("Server.Custom.Items.SapphireOre")]
     public class SapphireOre : BaseOre
     {
         [Constructable]

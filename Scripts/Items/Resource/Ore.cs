@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Server.Engines.Craft;
 using Server.Mobiles;
 using Server.Targeting;
@@ -86,6 +86,7 @@ namespace Server.Items
                             case 8:
                                 info = OreInfo.Valorite;
                                 break;
+            
                             default:
                                 info = null;
                                 break;
@@ -158,7 +159,7 @@ namespace Server.Items
         {
             get
             {
-                if (this.m_Resource >= CraftResource.DullCopper && this.m_Resource <= CraftResource.Valorite)
+                if (this.m_Resource >= CraftResource.DullCopper && this.m_Resource <= CraftResource.Sapphire)
                     return 1042845 + (int)(this.m_Resource - CraftResource.DullCopper);
 
                 return 1042853; // iron ore;
