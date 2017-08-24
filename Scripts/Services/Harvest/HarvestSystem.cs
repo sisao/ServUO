@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Server.Items;
 using Server.Targeting;
@@ -149,7 +149,7 @@ namespace Server.Engines.Harvest
 
             Type type = null;
 
-            if (skillBase >= resource.ReqSkill && from.CheckSkill(def.Skill, resource.MinSkill, resource.MaxSkill))
+            if (skillBase >= resource.ReqSkill )//&& from.CheckSkill(def.Skill, resource.MinSkill, resource.MaxSkill))
             {
                 type = this.GetResourceType(from, tool, def, map, loc, resource);
 

@@ -416,6 +416,24 @@ namespace Server.Items {
 
             public static readonly CraftAttributeInfo Blank;
             public static readonly CraftAttributeInfo DullCopper, ShadowIron, Copper, Bronze, Golden, Agapite, Verite, Valorite;
+        public static readonly CraftAttributeInfo OldCopper, Silver,
+            Rose,
+            Ice,
+            Amethyst,
+            BloodRock,
+            Aqua,
+            Fire,
+            Mytheril,
+            SandRock,
+            Dwarven,
+            BlackDiamond,
+            BlackRock,
+            Oceanic,
+            DaemonSteel,
+            Reactive,
+            Sapphire,
+            Havoc,
+            Adamantium;
             public static readonly CraftAttributeInfo Spined, Horned, Barbed;
             public static readonly CraftAttributeInfo RedScales, YellowScales, BlackScales, GreenScales, WhiteScales, BlueScales;
             public static readonly CraftAttributeInfo OakWood, AshWood, YewWood, Heartwood, Bloodwood, Frostwood;
@@ -853,9 +871,8 @@ namespace Server.Items {
             new CraftResourceInfo (0x979, 1053103, "Agapite", CraftAttributeInfo.Agapite, CraftResource.Agapite, typeof (AgapiteIngot), typeof (AgapiteOre), typeof (AgapiteGranite)),
             new CraftResourceInfo (0x89F, 1053102, "Verite", CraftAttributeInfo.Verite, CraftResource.Verite, typeof (VeriteIngot), typeof (VeriteOre), typeof (VeriteGranite)),
             new CraftResourceInfo (0x8AB, 1053101, "Valorite", CraftAttributeInfo.Valorite,  CraftResource.Valorite, typeof (ValoriteIngot),  typeof (ValoriteOre), typeof (ValoriteGranite)),
-            new CraftResourceInfo ( 1159, 0, "Old Copper",       CraftAttributeInfo.Blank,       CraftResource.OldCopper,                    typeof ( OldCopperIngot ),       typeof ( OldCopperOre ),     typeof ( DullCopperGranite ) ),
-            new CraftResourceInfo ( 0x770, 1053107, "Shadow Iron",       CraftAttributeInfo.Blank,       CraftResource.ShadowIron,           typeof ( ShadowIronIngot ),      typeof ( ShadowIronOre ),    typeof ( ShadowIronGranite ) ),
-            new CraftResourceInfo ( 0x497, 0, "Silver",          CraftAttributeInfo.Blank,       CraftResource.Silver,                       typeof ( SilverIngot ),          typeof ( SilverOre ),        typeof ( Granite ) ),
+            new CraftResourceInfo ( 1159, 1053110, "Old Copper",       CraftAttributeInfo.Blank,       CraftResource.OldCopper,                    typeof ( OldCopperIngot ),       typeof ( OldCopperOre ),     typeof ( DullCopperGranite ) ),
+            new CraftResourceInfo ( 0x497, 1053111, "Silver",          CraftAttributeInfo.Blank,       CraftResource.Silver,                       typeof ( SilverIngot ),          typeof ( SilverOre ),        typeof ( Granite ) ),
             new CraftResourceInfo ( 2948, 0, "Rose",             CraftAttributeInfo.Blank,       CraftResource.Rose,                         typeof ( RoseIngot ),            typeof ( RoseOre ),          typeof ( RoseGranite ) ),
             new CraftResourceInfo ( 2513, 0, "Ice",              CraftAttributeInfo.Blank,       CraftResource.Ice,                          typeof ( IceIngot ),             typeof ( IceOre ),           typeof ( IceGranite ) ),
             new CraftResourceInfo ( 1163, 0, "Amethyst",         CraftAttributeInfo.Blank,       CraftResource.Amethyst,                     typeof ( AmethystIngot ),        typeof ( AmethystOre ),      typeof ( AmethystGranite ) ),
@@ -989,7 +1006,7 @@ namespace Server.Items {
         /// </summary>
         public static CraftResourceType GetType (CraftResource resource)
         {
-            if (resource >= CraftResource.Iron && resource <= CraftResource.Valorite)
+            if (resource >= CraftResource.Iron && resource <= CraftResource.Sapphire)
                 return CraftResourceType.Metal;
 
             if (resource >= CraftResource.RegularLeather && resource <= CraftResource.BarbedLeather)

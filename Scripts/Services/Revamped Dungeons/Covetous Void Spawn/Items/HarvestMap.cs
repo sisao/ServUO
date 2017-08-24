@@ -1,4 +1,4 @@
-using Server;
+ï»¿using Server;
 using System;
 using System.Collections.Generic;
 using Server.Mobiles;
@@ -58,7 +58,7 @@ namespace Server.Items
         public Map TargetMap { get; private set; }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        public bool IsMinerMap { get { return _Resource >= CraftResource.Iron && _Resource <= CraftResource.Valorite; } }
+        public bool IsMinerMap { get { return _Resource >= CraftResource.Iron && _Resource <= CraftResource.Sapphire; } }
 
         [Constructable]
         public HarvestMap(CraftResource resource)
@@ -153,7 +153,7 @@ namespace Server.Items
 
             if (Sextant.Format(new Point3D(x, y, TargetMap.GetAverageZ(x, y)), TargetMap, ref xLong, ref yLat, ref xMins, ref yMins, ref xEast, ref ySouth))
             {
-                return String.Format("{0}° {1}'{2}, {3}° {4}'{5}", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W");
+                return String.Format("{0}Â° {1}'{2}, {3}Â° {4}'{5}", yLat, yMins, ySouth ? "S" : "N", xLong, xMins, xEast ? "E" : "W");
             }
 
             return "Unknown";
