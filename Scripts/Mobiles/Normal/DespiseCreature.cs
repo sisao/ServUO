@@ -104,7 +104,7 @@ namespace Server.Engines.Despise
 
         public virtual int HitsStart { get { return StrStart + (int)((double)StrStart * ((double)StatRatio / 100.0)); } }
         public virtual int StamStart { get { return DexStart + (int)((double)DexStart * ((double)StatRatio / 100.0)); } }
-        public virtual int ManaStart { get { return DexStart + (int)((double)DexStart * ((double)StatRatio / 100.0)); } }
+        public virtual int ManaStart { get { return IntStart + (int)((double)IntStart * ((double)StatRatio / 100.0)); } }
 
         public virtual int MaxHits { get { return 1000; } }
         public virtual int MaxStam { get { return 1000; } }
@@ -145,25 +145,27 @@ namespace Server.Engines.Despise
             SetStam(StamStart);
             SetMana(ManaStart);
 
+            NoLootOnDeath = true;
+
             SetDamage(MinDamStart, MaxDamStart);
         }
 
-        public override void GenerateLoot(bool spawning)
+        public override bool IsEnemy(Mobile m)
         {
-            if (spawning)
-                Timer.DelayCall(TimeSpan.FromSeconds(.5), new TimerCallback(GenerateLoot_Callback));
-            else
-                base.GenerateLoot(spawning);
-        }
+            if (m is PlayerMobile)
+            {
+                if (m.Karma <= 1000 && Alignment == Alignment.Good)
+                    return true;
 
-        public void GenerateLoot_Callback()
-        {
-            base.GenerateLoot(true);
-        }
+                if (m.Karma >= 1000 && Alignment == Alignment.Evil)
+                    return true;
+            }
+            else if (m is DespiseCreature)
+            {
+                return ((DespiseCreature)m).Alignment != this.Alignment;
+            }
 
-        public override void GenerateLoot()
-        {
-            AddLoot(LootPack.AosRich, Math.Max(1, m_Power / 2));
+            return false;
         }
 
         public override bool CanBeRenamedBy(Mobile from)
@@ -174,14 +176,18 @@ namespace Server.Engines.Despise
             return false;
         }
 
+        public override void GetContextMenuEntries(Mobile from, System.Collections.Generic.List<Server.ContextMenus.ContextMenuEntry> list)
+        {
+        }
+
         public override void GetProperties(ObjectPropertyList list)
         {
             base.GetProperties(list);
 
-            list.Add(1153297, String.Format("#{0}\t{1}", GetPowerLabel(m_Power), m_Power.ToString())); // Power Level: ~1_LEVEL~: ~2_VAL~
-
             if (ControlMaster != null)
                 list.Add(1153303, ControlMaster.Name); // Controller: ~1_NAME~
+
+            list.Add(1153297, String.Format("{0}\t#{1}", m_Power.ToString(), GetPowerLabel(m_Power))); // Power Level: ~1_LEVEL~: ~2_VAL~
         }
 
         public override void OnCombatantChange()
@@ -211,10 +217,7 @@ namespace Server.Engines.Despise
 
             if (m_Orb != null)
             {
-                if (m_Orb.Owner != null)
-                    m_Orb.Owner.SendLocalizedMessage(1153312); // The Wisp Orb dissolves into aether.
-
-                m_Orb.Delete();
+                Unlink(false);
             }
         }
 
@@ -247,11 +250,19 @@ namespace Server.Engines.Despise
             m_Orb.InvalidateHue();
         }
 
-        public void Unlink()
+        public void Unlink(bool message = true)
         {
             RangeHome = 10;
             SetControlMaster(null);
-            PublicOverheadMessage(MessageType.Regular, 0x59, 1153296); // * This creature is no longer influenced by a Wisp Orb *
+
+            if (Alive && message)
+            {
+                if (m_Orb != null && m_Orb.Owner != null)
+                {
+                    m_Orb.Owner.SendLocalizedMessage(1153335, Name); // You have released control of ~1_NAME~.
+                    NonlocalOverheadMessage(MessageType.Regular, 0x59, 1153296, Name); // * This creature is no longer influenced by a Wisp Orb *
+                }
+            }
 
             if (m_Orb != null)
             {
@@ -358,6 +369,9 @@ namespace Server.Engines.Despise
             m_Power = reader.ReadInt();
             m_MaxPower = reader.ReadInt();
             m_Progress = reader.ReadInt();
+
+            if (!NoLootOnDeath)
+                NoLootOnDeath = true;
         }
     }
 }

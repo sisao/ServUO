@@ -3,6 +3,8 @@ using System;
 using Server.Mobiles;
 using Server.Items;
 using System.Collections.Generic;
+using System.Linq;
+using Server.Commands;
 
 namespace Server.Engines.Despise
 {
@@ -12,6 +14,9 @@ namespace Server.Engines.Despise
         {
             EventSink.Login += new LoginEventHandler(OnLogin);
             EventSink.OnEnterRegion += new OnEnterRegionEventHandler(OnEnterRegion);
+            
+            if(m_Instance != null)
+                CommandSystem.Register("CheckSpawnersVersion3", AccessLevel.Administrator, m_Instance.CheckSpawnersVersion3);
         }
 
         private static DespiseController m_Instance;
@@ -37,7 +42,7 @@ namespace Server.Engines.Despise
         public Region EvilRegion { get { return m_EvilRegion; } }
         public Region LowerRegion { get { return m_LowerRegion; } }
         public Region StartRegion { get { return m_StartRegion; } }
-
+        
         [CommandProperty(AccessLevel.GameMaster)]
         public bool Enabled
         {
@@ -92,7 +97,7 @@ namespace Server.Engines.Despise
 
         private List<Mobile> m_ToTransport = new List<Mobile>();
 
-        private readonly TimeSpan EncounterCheckDuration = TimeSpan.FromMinutes(10);
+        private readonly TimeSpan EncounterCheckDuration = TimeSpan.FromMinutes(5);
         private readonly TimeSpan DeadLineDuration = TimeSpan.FromMinutes(90);
 
         public bool IsInSequence { get { return m_SequenceTimer != null || m_CleanupTimer != null; } }
@@ -171,17 +176,18 @@ namespace Server.Engines.Despise
 
             int good = GetArmyPower(Alignment.Good);
             int evil = GetArmyPower(Alignment.Evil);
-            Alignment strongest;
+            Alignment strongest = Alignment.Neutral;
 
             if (good == 0 && evil == 0)
             {
                 m_NextBossEncounter = DateTime.UtcNow + EncounterCheckDuration;
-                return;
             }
-
-            if (good > evil) strongest = Alignment.Good;
-            else if (good < evil) strongest = Alignment.Evil;
-            else strongest = 0.5 > Utility.RandomDouble() ? Alignment.Good : Alignment.Evil;
+            else
+            {
+                if (good > evil) strongest = Alignment.Good;
+                else if (good < evil) strongest = Alignment.Evil;
+                else strongest = 0.5 > Utility.RandomDouble() ? Alignment.Good : Alignment.Evil;
+            }
 
             List<Mobile> players = new List<Mobile>();
             players.AddRange(m_GoodRegion.GetPlayers());
@@ -216,12 +222,15 @@ namespace Server.Engines.Despise
                 }
             }
 
-            ColUtility.Free(players);
-            m_SequenceAlignment = strongest;
+            if (strongest != Alignment.Neutral)
+            {
+                ColUtility.Free(players);
+                m_SequenceAlignment = strongest;
 
-            Timer.DelayCall(TimeSpan.FromSeconds(60), new TimerCallback(BeginSequence));
-            m_NextBossEncounter = DateTime.MinValue;
-            m_Sequencing = true;
+                Timer.DelayCall(TimeSpan.FromSeconds(60), new TimerCallback(BeginSequence));
+                m_NextBossEncounter = DateTime.MinValue;
+                m_Sequencing = true;
+            }
         }
 
         public int GetArmyPower(Alignment alignment)
@@ -348,7 +357,7 @@ namespace Server.Engines.Despise
             m_DeadLine = DateTime.MinValue;
             m_ToTransport.Clear();
 
-            ResetSpawners(true);
+            Timer.DelayCall(TimeSpan.FromSeconds(10), () => ResetSpawners(true));
 
             m_NextBossEncounter = DateTime.UtcNow + EncounterCheckDuration;
         }
@@ -563,11 +572,9 @@ namespace Server.Engines.Despise
             {
                 Timer.DelayCall(() =>
                     {
-                        if (orb.Pet != null && !orb.Pet.Deleted)
-                            orb.Pet.Delete();
-
+                        e.From.SendLocalizedMessage(1153233); // The Wisp Orb vanishes to whence it came...
                         orb.Delete();
-                    });;
+                    });
             }
         }
 
@@ -625,7 +632,7 @@ namespace Server.Engines.Despise
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)2);
+            writer.Write((int)4);
 
             writer.Write(m_Enabled);
             writer.Write(m_NextBossEncounter);
@@ -657,6 +664,9 @@ namespace Server.Engines.Despise
 			m_DeadLine = reader.ReadDateTime();
 			m_SequenceAlignment = (Alignment)reader.ReadInt();
 
+            if(version < 4)
+                Timer.DelayCall(TimeSpan.FromSeconds(30), CheckSpawnersVersion3);
+                
             int count = reader.ReadInt();
             for (int i = 0; i < count; i++)
             {
@@ -687,9 +697,9 @@ namespace Server.Engines.Despise
                 }
             }
 
-			if(!m_Enabled)
-				return;
-				
+            if (!m_Enabled)
+                return;
+
 			BeginTimer();
 			
 			if(m_DeadLine > DateTime.UtcNow)
@@ -714,5 +724,53 @@ namespace Server.Engines.Despise
             if (version < 2)
                 Timer.DelayCall(TimeSpan.FromSeconds(30), RemoveAnkh);
 		}
+
+        public void CheckSpawnersVersion3(CommandEventArgs e)
+        {
+            CheckSpawnersVersion3();
+        }
+
+        public void CheckSpawnersVersion3()
+        {
+            foreach (var spawner in World.Items.Values.OfType<XmlSpawner>().Where(s => s.Name != null && s.Name.ToLower().IndexOf("despiserevamped") >= 0))
+            {
+                foreach (var obj in spawner.SpawnObjects)
+                {
+                    if (obj.TypeName != null)
+                    {
+                        if (obj.TypeName.ToLower().IndexOf("berlingblades") >= 0)
+                        {
+                            string name = obj.TypeName;
+
+                            obj.TypeName = name.Replace("BerlingBlades", "BirlingBlades");
+                        }
+                        else if (obj.TypeName.ToLower().IndexOf("sagittari") >= 0)
+                        {
+                            string name = obj.TypeName;
+
+                            obj.TypeName = name.Replace("Sagittari", "Sagittarri");
+                        }
+                    }
+
+                    if (Region.Find(spawner.Location, spawner.Map) == m_GoodRegion ||
+                        Region.Find(spawner.Location, spawner.Map) == m_EvilRegion)
+                    {
+                        if(obj.TypeName.IndexOf(@",{RND,1,5}") < 0)
+                            obj.TypeName = obj.TypeName + @",{RND,1,5}";
+                    }
+                }
+            }
+
+            foreach (var r in new Region[] { m_GoodRegion, m_EvilRegion, m_LowerRegion, m_StartRegion })
+            {
+                foreach (var item in r.GetEnumeratedItems().Where(i => i is Moongate || i is GateTeleporter))
+                {
+                    item.Delete();
+                    WeakEntityCollection.Remove("despise", item);
+                }
+            }
+
+            DespiseRevampedSetup.SetupTeleporters();
+        }
     }
 }
