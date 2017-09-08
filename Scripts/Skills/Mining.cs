@@ -92,7 +92,7 @@ namespace Server.Engines.Harvest {
                 new HarvestResource (75.0, 75.0, 100.0, "You dig some Blood Rock ore and put it in your backpack", typeof (BloodRockOre), typeof (BloodRockGranite)),
                 new HarvestResource (80.0, 40.0, 120.0, 1007076, typeof (BronzeOre), typeof (BronzeGranite), typeof (BronzeElemental)),
                 new HarvestResource (80.0, 80.0, 100.0, "You dig some Aqua ore and put it in your backpack", typeof (AquaOre), typeof (AquaGranite)),
-                new HarvestResource (82.0, 82.0, 100.0, "You dig some Fire ore and put it in your backpack", typeof (FireOre), typeof (Granite)), //Fire
+                new HarvestResource (82.0, 82.0, 100.0, "You dig some Fire ore and put it in your backpack", typeof (FireOre), typeof (Granite)),
                 new HarvestResource (85.0, 45.0, 125.0, 1007077, typeof (GoldOre), typeof (GoldGranite), typeof (GoldenElemental)),
                 new HarvestResource (87.5, 87.5, 100.0, "You dig some Mytheril ore and put it in your backpack", typeof (MytherilOre), typeof (MytherilGranite)),
                 new HarvestResource (90.0, 50.0, 130.0, 1007078, typeof (AgapiteOre), typeof (AgapiteGranite), typeof (AgapiteElemental)),
